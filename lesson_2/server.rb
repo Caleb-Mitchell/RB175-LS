@@ -1,5 +1,17 @@
 require 'socket'
 
+def parse_reqest(request_line)
+  http_method, path_and_params, http = request_line.split(' ')
+  path, params = path_and_params.split('?')
+
+  params = params.split('&').each_with_object({}) do |pair, hash|
+    key, value = pair.split('=')
+    hash[key] = value
+  end
+
+  [http_method, path, params]
+end
+
 server = TCPServer.new('localhost', 3003)
 loop do
   client = server.accept
@@ -9,27 +21,17 @@ loop do
 
   puts request_line
 
+  http_method, path, params = parse_reqest(request_line)
+
   client.puts request_line
-
-  ###
-  url_segments = request_line.split
-
-  # parse HTTP method
-  http_method = url_segments.first
-  # parse path
-  path = request_line.split[1].split('?').first
-
-  # parse params
-  param_string = request_line.split[1].split('?')[1].split('&')
-  params = {}
-  param_string.each do |pair|
-    new_pair = pair.split('=')
-    params[new_pair[0]] = new_pair[1]
-  end
-
+  client.puts http_method
+  client.puts path
   client.puts params
 
-  params['rolls'].to_i.times { client.puts rand(params['sides'].to_i) + 1 }
+  rolls = params['rolls'].to_i
+  sides = params['sides'].to_i
+
+  rolls.times { client.puts rand(sides) + 1 }
 
   client.close
 end
