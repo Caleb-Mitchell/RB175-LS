@@ -1,3 +1,4 @@
+require 'tilt/erubis'
 require "sinatra"
 require "sinatra/reloader"
 
