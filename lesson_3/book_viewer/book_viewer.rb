@@ -1,7 +1,10 @@
 require 'tilt/erubis'
-require "sinatra"
-require "sinatra/reloader"
+require 'sinatra'
+require 'sinatra/reloader'
 
-get "/" do
-  File.read "public/template.html"
+get '/' do
+  @title = 'The Adventures of Sherlock Holmes'
+  @contents = File.readlines("data/toc.txt")
+
+  erb :home
 end
