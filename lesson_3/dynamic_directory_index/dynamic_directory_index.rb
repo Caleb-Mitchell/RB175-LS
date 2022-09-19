@@ -4,8 +4,7 @@ require 'sinatra/reloader'
 
 get '/' do
   @title = 'Dynamic Directory Index'
-  # @file1 = File.read('public/path')
+  @files = Dir.glob("public/*").map { |file| File.basename(file) }.sort
 
-  # erb :index
+  erb :index
 end
-

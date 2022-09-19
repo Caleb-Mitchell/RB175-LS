@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= @title %></title>
+    <meta charset="UTF-8">
+    <!-- comment this out if site is not designed to be responsive -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <ul>
+<% @files.each do |file| %>
+      <li>
+        <a href="<%= file %>"><%= file %></a>
+      </li>
+<% end %>
+    </ul>
+
+    <p>
+      <a href="/">Descending</a>
+      <a href="/?order=ascending">Ascending</a>
+    </p>
+  </body>
+</html>
