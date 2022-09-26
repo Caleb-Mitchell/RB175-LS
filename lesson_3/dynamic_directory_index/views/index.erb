@@ -9,16 +9,19 @@
   </head>
   <body>
     <ul>
-<% @files.each do |file| %>
-      <li>
-        <a href="<%= file %>"><%= file %></a>
-      </li>
-<% end %>
+      <% @files.each do |file| %>
+        <li>
+          <a href="<%= file %>"><%= file %></a>
+        </li>
+      <% end %>
     </ul>
 
     <p>
-      <a href="/">Descending</a>
-      <a href="/?order=ascending">Ascending</a>
+      <% if params[:order] == "desc" %>
+        <a href="/">Sort ascending</a>
+      <% else %>
+        <a href="/?order=desc">Sort descending</a>
+      <% end %>
     </p>
   </body>
 </html>
