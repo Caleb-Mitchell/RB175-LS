@@ -9,10 +9,21 @@ get '/' do
   erb :home
 end
 
-get '/chapters/1' do
-  @title = 'Chapter 1'
+get '/chapters/:number' do
   @contents = File.readlines('data/toc.txt')
-  @chapter = File.read('data/chp1.txt')
+
+  number = params[:number].to_i
+
+  # want to change the title displayed to the chapter name
+  # instead of the chapter number
+  # @title = "Chapter #{number}"
+
+  @title = "Chapter #{number}: #{@contents[number - 1]}"
+  @chapter = File.read("data/chp#{number}.txt")
 
   erb :chapter
+end
+
+get '/show/:name' do
+  params[:name]
 end
