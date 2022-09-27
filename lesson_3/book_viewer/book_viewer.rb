@@ -6,6 +6,17 @@ before do
   @contents = File.readlines('data/toc.txt')
 end
 
+helpers do
+  def in_paragraphs(chapter_content)
+
+    # returns the input string, with paragraph tags
+    # wrapped around each *non-empty line
+    
+    # split by newlines
+    chapter_content.split("\n\n")
+  end
+end
+
 get '/' do
   @title = 'The Adventures of Sherlock Holmes'
 
