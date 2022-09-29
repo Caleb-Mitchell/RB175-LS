@@ -8,12 +8,9 @@ end
 
 helpers do
   def in_paragraphs(chapter_content)
-
-    # returns the input string, with paragraph tags
-    # wrapped around each *non-empty line
-    
-    # split by newlines
-    chapter_content.split("\n\n")
+    chapter_content.split("\n\n").map do |para|
+      "<p>" << para << "</p>"
+    end.join
   end
 end
 
@@ -27,12 +24,14 @@ get '/chapters/:number' do
   number = params[:number].to_i
   chapter_name = @contents[number - 1]
 
+  redirect "/" unless (1..@contents.size).cover? number
+
   @title = "Chapter #{number}: #{chapter_name}"
   @chapter = File.read("data/chp#{number}.txt")
 
   erb :chapter
 end
 
-get '/show/:name' do
-  params[:name]
+not_found do
+  redirect "/"
 end
