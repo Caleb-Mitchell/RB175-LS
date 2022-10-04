@@ -4,3 +4,20 @@
   <input name="query" value="<%= params[:query] %>">
   <button type="submit">Search</button>
 </form>
+
+<% unless params[:query].nil? %>
+
+  <% if @total_text.any? { |chapter| chapter.match?("#{params[:query]}") } %> 
+    <h2 class="content-subhead">Results for '<%= params[:query] %>'</h2>
+    <ul>
+      <% @chapter_results.each do |chapter_num| %>
+        <li>
+          <a href="/chapters/<%= chapter_num + 1 %>"><%= @contents[chapter_num] %></a>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>Sorry, no matches were found</p>
+  <% end %>
+
+<% end %>

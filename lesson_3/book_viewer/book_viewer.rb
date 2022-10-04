@@ -32,6 +32,19 @@ get '/chapters/:number' do
   erb :chapter
 end
 
+get '/search' do
+  @total_text = (1..@contents.size).each_with_object([]) do |number, arr|
+    arr << File.read("data/chp#{number}.txt")
+  end
+
+  @chapter_results = []
+  @total_text.each_with_index do |chapter, idx|
+    @chapter_results << idx if chapter.match?(params[:query].to_s)
+  end
+
+  erb :search
+end
+
 not_found do
   redirect "/"
 end
