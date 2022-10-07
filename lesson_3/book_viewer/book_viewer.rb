@@ -8,9 +8,20 @@ end
 
 helpers do
   def in_paragraphs(chapter_content)
-    chapter_content.split("\n\n").map do |para|
-      "<p>" << para << "</p>"
+    chapter_content.split("\n\n").map.with_index do |para, idx|
+      "<p id=#{idx}>" << para << "</p>"
     end.join
+  end
+
+  def para_array(chapter_content)
+    chapter_content.split("\n\n").map.with_index do |para, idx|
+      "<p id=#{idx}>" << para << "</p>"
+    end
+  end
+
+  def highlight_match(content, query)
+    # gsub shapter content, replacing query with query surrounded by strong tags
+    content.gsub(query, "<strong>#{query}</strong>")
   end
 end
 
@@ -41,6 +52,9 @@ get '/search' do
   @total_text.each_with_index do |chapter, idx|
     @chapter_results << idx if chapter.match?(params[:query].to_s)
   end
+
+  @para_matches = []
+
 
   erb :search
 end
