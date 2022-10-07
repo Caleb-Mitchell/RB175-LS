@@ -1,0 +1,22 @@
+<header>
+  <h1><%= @name %></h1>
+</header>
+
+<main>
+
+  <p>
+  email address: <%= @email %>
+  </p>
+
+  <p>
+  interests: <%= @interests.join(', ') %>
+  </p>
+
+  <ul>
+    <% @user_list.each do |user| %>
+      <li>
+        <a href="/user_list/<%= "#{user.to_s}" %>"><%= user %></a>
+      </li>
+    <% end %>
+  </ul>
+</main>
